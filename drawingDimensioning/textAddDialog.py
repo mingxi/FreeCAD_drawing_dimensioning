@@ -7,6 +7,8 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+import six
+
 from PySide import QtCore, QtGui
 
 class Ui_Dialog(object):
@@ -91,7 +93,20 @@ class Ui_Dialog(object):
         QtCore.QObject.connect(self.textLineEdit, QtCore.SIGNAL("returnPressed()"), Dialog.accept)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, Dialog):
+    def translateUiNone(self, Dialog):
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Add Text", None))
+        self.label.setText(QtGui.QApplication.translate("Dialog", "Text", None))
+        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Font-size", None))
+        self.sizeLineEdit.setText(QtGui.QApplication.translate("Dialog", "4pt", None))
+        self.label_5.setText(QtGui.QApplication.translate("Dialog", "Rotation", None))
+        self.label_6.setText(QtGui.QApplication.translate("Dialog", "°", None))
+        self.label_3.setText(QtGui.QApplication.translate("Dialog", "Color", None))
+        self.colorLineEdit.setText(QtGui.QApplication.translate("Dialog", "rgb(255,0,0)", None))
+        self.label_4.setText(QtGui.QApplication.translate("Dialog", "Family", None))
+        self.familyLineEdit.setText(QtGui.QApplication.translate("Dialog", "Verdana", None))
+        self.placeButton.setText(QtGui.QApplication.translate("Dialog", "Place Text", None))
+
+    def translateUiUTF8(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Add Text", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Dialog", "Text", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("Dialog", "Font-size", None, QtGui.QApplication.UnicodeUTF8))
@@ -104,3 +119,10 @@ class Ui_Dialog(object):
         self.familyLineEdit.setText(QtGui.QApplication.translate("Dialog", "Verdana", None, QtGui.QApplication.UnicodeUTF8))
         self.placeButton.setText(QtGui.QApplication.translate("Dialog", "Place Text", None, QtGui.QApplication.UnicodeUTF8))
 
+    def retranslateUi(self, Dialog):
+        if six.PY3:
+            self.translateUiNone(Dialog)
+        elif QtCore.qVersion() > "4":
+            self.translateUiNone(Dialog)
+        else:
+            self.translateUiUTF8(Dialog)

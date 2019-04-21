@@ -6,6 +6,7 @@
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
+import six
 
 from PySide import QtCore, QtGui
 
@@ -59,7 +60,7 @@ class Ui_Dialog(object):
         QtCore.QObject.connect(self.lowerLineEdit, QtCore.SIGNAL("returnPressed()"), Dialog.accept)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, Dialog):
+    def translateUiUTF8(Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Add tolerance", None, QtGui.QApplication.UnicodeUTF8))
         self.placeButton.setText(QtGui.QApplication.translate("Dialog", "Add", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Dialog", "upper", None, QtGui.QApplication.UnicodeUTF8))
@@ -67,4 +68,22 @@ class Ui_Dialog(object):
         self.upperLineEdit.setText(QtGui.QApplication.translate("Dialog", "+0", None, QtGui.QApplication.UnicodeUTF8))
         self.lowerLineEdit.setText(QtGui.QApplication.translate("Dialog", "-0", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Dialog", "font scale", None, QtGui.QApplication.UnicodeUTF8))
+
+    def translateUiNone(Dialog):
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Add tolerance", None))
+        self.placeButton.setText(QtGui.QApplication.translate("Dialog", "Add", None))
+        self.label.setText(QtGui.QApplication.translate("Dialog", "upper", None))
+        self.label_2.setText(QtGui.QApplication.translate("Dialog", "lower", None))
+        self.upperLineEdit.setText(QtGui.QApplication.translate("Dialog", "+0", None))
+        self.lowerLineEdit.setText(QtGui.QApplication.translate("Dialog", "-0", None))
+        self.label_3.setText(QtGui.QApplication.translate("Dialog", "font scale", None))
+
+    def retranslateUi(self, Dialog):
+        if six.PY3:
+            self.translateUiNone()
+        elif QtCore.qVersion() > "4":
+            self.translateUiNone(Dialog)
+        else:
+            self.translateUiUTF8(Dialog)
+
 
